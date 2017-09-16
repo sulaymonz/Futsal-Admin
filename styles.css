@@ -3,6 +3,9 @@ body {
     background-size: cover;
     color: #fff !important;
 }
+.main-container {
+    padding-bottom: 60px;
+}
 
 .panel {
     border: none !important;
@@ -34,8 +37,8 @@ body {
 }
 
 h3 {
-    padding-top: 70px;
-    padding-bottom: 25px;
+    margin-top: 90px !important;
+    margin-bottom: 35px !important;
     text-shadow: 0 5px 10px rgba(0,0,0,.6);
 }
 .panel,
