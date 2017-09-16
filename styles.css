@@ -42,8 +42,8 @@ h3 {
     text-shadow: 0 5px 10px rgba(0,0,0,.6);
 }
 .panel,
-input {
-    background: rgba(255,255,255,.8) !important;
+.form-control {
+    background: rgba(255,255,255,.9) !important;
 }
 
 .btn {
