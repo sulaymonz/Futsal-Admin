@@ -70,3 +70,7 @@ h3 {
 .panel .control-label {
     text-shadow: none;
 }
+
+.left-align {
+    text-align: left !important;
+}
