@@ -13,17 +13,21 @@ window.onload = function(){
     var inputs         = getAll('input[type=text], input[type=number], select', cont);
     var checkboxes     = getAll('input[type=checkbox]', cont);
     var requiredFields = getAll('input:required', cont);
-    var numbers        = getAll('input[type=number]', cont);
 
     var formData;
     var fileList;
     var imageFormats = ["image/jpeg", "image/png", "image/gif"];
 
+    var isValid = true;
+    var invalids = [];
+
     photos.addEventListener('change', handleFiles);
 
     submit.addEventListener("click", function(){
-        //validateForm();
+        resetInvalids();
+        validateForm();
 
+        // collecting data to submit
         formData = new FormData();
 
         inputs.forEach(function(input){
@@ -58,12 +62,17 @@ window.onload = function(){
     }
 
     function validateForm(){
-        // TODO: should check the required ones, numbers to be numbers and in given range
-        /*var isValid = true;
-        var invalids = [];
         for(var i=0; i<requiredFields.length; i++){
-            if(requiredFields[i].value == "") return false;
-        }*/
+            if(requiredFields[i].value == ""){
+                isValid = false;
+                invalids.push(requiredFields[i]);
+            }
+        }
+        if(!isValid){
+            invalids.forEach(function(inv){
+                inv.parentNode.parentNode.classList.add('has-error');
+            });
+        }
 
     }
 
@@ -73,6 +82,14 @@ window.onload = function(){
             if(imageFormats.indexOf(image.type) == -1) return false;
         });
 
+    }
+
+    function resetInvalids(){
+        invalids.forEach(function(inv){
+            inv.parentNode.parentNode.classList.remove('has-error');
+        });
+        isValid = true;
+        invalids = [];
     }
 
     function showSnackbar(message){  // TODO: shows the message in snackbar that appears at bottom for 3 seconds
