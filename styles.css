@@ -45,7 +45,6 @@ h3 {
 .form-control {
     background: rgba(255,255,255,.9) !important;
 }
-
 .btn {
     color: #fff !important;
     background-color: #665851 !important;
@@ -55,7 +54,6 @@ h3 {
     background-color: #3b332f !important;
     transition: all .1s;
 }
-
 .panel,
 .form-control,
 .btn {
@@ -64,13 +62,60 @@ h3 {
 .panel .form-control {
     box-shadow: none !important;
 }
-.control-label {
+.control-label,
+#feedback {
     text-shadow: 0px 5px 10px rgba(0,0,0,.6);
 }
 .panel .control-label {
     text-shadow: none;
 }
-
 .left-align {
     text-align: left !important;
+}
+.has-error .form-control {
+    background-color: rgba(255, 235, 225, 0.9) !important;
+}
+#feedback {
+    color: #a94442;
+    text-align: center;
+    margin-bottom: 15px;
+    opacity: 0;
+}
+#feedback.show {
+    opacity: 1;
+}
+#snackbar {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: rgba(51,51,51,.9);
+    color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 95px;
+}
+#snackbar.show {
+    visibility: visible !important;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 95px; opacity: 1;}
+}
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 95px; opacity: 1;}
+}
+@-webkit-keyframes fadeout {
+    from {bottom: 95px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
+@keyframes fadeout {
+    from {bottom: 95px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
 }

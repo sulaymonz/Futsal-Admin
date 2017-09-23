@@ -9,6 +9,8 @@ window.onload = function(){
     var form       = cont.querySelector('form');
     var submit     = cont.querySelector('#submit');
     var photos     = cont.querySelector('#photos');
+    var feedback   = cont.querySelector('#feedback');
+    var snackbar   = cont.querySelector('#snackbar');
 
     var inputs         = getAll('input[type=text], input[type=number], select', cont);
     var checkboxes     = getAll('input[type=checkbox]', cont);
@@ -21,79 +23,112 @@ window.onload = function(){
     var isValid = true;
     var invalids = [];
 
-    photos.addEventListener('change', handleFiles);
+    photos.addEventListener('change', handleFileSelect);
 
     submit.addEventListener("click", function(){
         resetInvalids();
-        validateForm();
+        if(validateForm()){
+            // collecting data to submit
+            formData = new FormData();
 
-        // collecting data to submit
-        formData = new FormData();
-
-        inputs.forEach(function(input){
-            formData.append(input.id, input.value);
-        });
-        checkboxes.forEach(function(checkbox){
-            formData.append(checkbox.id, checkbox.checked);
-        });
-        for(var i=0; i<fileList.length; i++){
-            formData.append("photos", fileList[i]);
-        }
-
-        /*for(var value of formData.values()){
-            console.log(value);
-        }*/
-
-        $.ajax({
-            url: "ourURLHere",
-            type: "POST",
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function (response) {
-                console.log(response);
+            inputs.forEach(function(input){
+                formData.append(input.id, input.value);
+            });
+            checkboxes.forEach(function(checkbox){
+                formData.append(checkbox.id, checkbox.checked);
+            });
+            for(var i=0; i<fileList.length; i++){
+                formData.append("photos", fileList[i]);
             }
-        });
 
+            // uncomment to log the data collected
+            /*for(var value of formData.values()){
+             console.log(value);
+            }*/
+
+            if(validateFiles(formData)){
+                showSnackbar('Зал успешно добавлен.'); // should put this line inside success function when bd url ready
+                $.ajax({
+                    url: "ourURLHere",
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        console.log(response);
+                    }
+                });
+            }
+            else showErrorMessage('Файлы должны быть в формате jpg, png или gif');
+        }
+        else showErrorMessage('Заполните все объязательные поля (*)');
     });
 
-    function handleFiles(){
+    // removing error style from input when start typing
+    requiredFields.forEach(function(field){
+        field.addEventListener('keydown', function(){
+            removeErrorColor(this);
+        });
+    });
+
+    function handleFileSelect(){
         fileList = this.files;
+        removeErrorColor(this);
     }
 
     function validateForm(){
-        for(var i=0; i<requiredFields.length; i++){
-            if(requiredFields[i].value == ""){
+        requiredFields.forEach(function(req){
+            if(req.value == ""){
                 isValid = false;
-                invalids.push(requiredFields[i]);
+                invalids.push(req);  // array of invalid fields will be used to reset them soon.
+                addErrorColor(invalids[invalids.length-1]);  // styling invalids.
             }
-        }
-        if(!isValid){
-            invalids.forEach(function(inv){
-                inv.parentNode.parentNode.classList.add('has-error');
-            });
-        }
+        });
 
+        return isValid;
     }
 
     function validateFiles(data){
-        var images = data.getAll("photos");
+        var images = data.getAll("photos");  // here getAll() is built-in method of FormData object
+        var filesValid = true;
         images.forEach(function(image){
-            if(imageFormats.indexOf(image.type) == -1) return false;
+            if(imageFormats.indexOf(image.type) == -1) filesValid = false;
         });
-
+        return filesValid;
     }
 
     function resetInvalids(){
         invalids.forEach(function(inv){
-            inv.parentNode.parentNode.classList.remove('has-error');
+            removeErrorColor(inv);
         });
         isValid = true;
         invalids = [];
+        hideErrorMessage();
     }
 
-    function showSnackbar(message){  // TODO: shows the message in snackbar that appears at bottom for 3 seconds
-        console.log(message);
+    function addErrorColor(node){
+        node.parentNode.classList.add('has-error');
+    }
+
+    function removeErrorColor(node){
+        node.parentNode.classList.remove('has-error');
+    }
+
+    function showErrorMessage(message){
+        feedback.innerHTML = message;
+        feedback.classList.add('show');
+    }
+
+    function hideErrorMessage(){
+        feedback.classList.remove('show');
+    }
+
+    function showSnackbar(message){
+        snackbar.innerHTML = message;
+        snackbar.classList.add('show');
+        setTimeout(function(){
+            snackbar.classList.remove('show');
+        }, 3000);
     }
 
     function getAll(selector, context){

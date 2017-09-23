@@ -30,13 +30,13 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label class="control-label col-sm-4" for="zal-name">Название</label>
+                    <label class="control-label col-sm-4" for="zal-name">Название*</label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control" id="zal-name" required>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label  col-sm-4" for="address">Адрес</label>
+                    <label class="control-label  col-sm-4" for="address">Адрес*</label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control" id="address" required>
                     </div>
@@ -52,13 +52,13 @@
                     <div class="panel-body">
                         <div class="form-group row">
                             <div class="col-ms-3">
-                                <label class="control-label  col-sm-1" for="latitude">Lat.</label>
+                                <label class="control-label  col-sm-1" for="latitude">Lat.*</label>
                                 <div class="col-sm-5">
                                     <input type="text" class="form-control" id="latitude" required>
                                 </div>
                             </div>
                             <div class="col-ms-3">
-                                <label class="control-label  col-sm-1" for="longitude">Long.</label>
+                                <label class="control-label  col-sm-1" for="longitude">Long.*</label>
                                 <div class="col-sm-5">
                                     <input type="text" class="form-control" id="longitude" required>
                                 </div>
@@ -74,7 +74,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label  col-sm-4" for="amount">Количество залов</label>
+                    <label class="control-label  col-sm-4" for="amount">Количество залов*</label>
                     <div class="col-sm-8">
                         <input type="number" class="form-control" id="amount" value="1" min="1" max="5" required>
                     </div>
@@ -96,19 +96,19 @@
                     <div class="col-sm-8">
                         <input type="text" class="form-control" id="phone" required>
                     </div>
-                    <label class="control-label col-sm-4 left-align" for="phone">Телефон</label>
+                    <label class="control-label col-sm-4 left-align" for="phone">Телефон*</label>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-8">
                         <input type="number" class="form-control" id="price" min="20" max="300" required>
                     </div>
-                    <label class="control-label  col-sm-4 left-align" for="price">Цена за час</label>
+                    <label class="control-label  col-sm-4 left-align" for="price">Цена за час*</label>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-8">
                         <input type="file" class="form-control" id="photos" multiple required>
                     </div>
-                    <label class="control-label  col-sm-4 left-align" for="photos">Фотки</label>
+                    <label class="control-label  col-sm-4 left-align" for="photos">Фотки*</label>
                 </div>
                 <div class="row">
                     <div class="col-sm-8">
@@ -141,12 +141,20 @@
         </div>
 
         <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-8">
+                <div id="feedback">Заполните все объязательные поля (*)</div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-sm-4"></div>
             <div class="col-sm-4">
                 <button type="button" class="btn btn-default btn-block" id="submit">Добавить</button>
             </div>
         </div>
     </form>
+
+    <div id="snackbar"></div>
 </div>
 
 </body>
