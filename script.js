@@ -47,7 +47,7 @@ window.onload = function(){
             }*/
 
             if(validateFiles(formData)){
-                showSnackbar('Зал успешно добавлен.'); // should put this line inside success function when bd url ready
+                showSnackbar('Зал успешно добавлен.'); // should put this line inside success function when db url ready
                 $.ajax({
                     url: "ourURLHere",
                     type: "POST",
@@ -56,12 +56,19 @@ window.onload = function(){
                     contentType: false,
                     success: function (response) {
                         console.log(response);
+                        // TODO: fields should be emptied after data successfully sent
                     }
                 });
             }
-            else showErrorMessage('Файлы должны быть в формате jpg, png или gif');
+            else {
+                showErrorMessage('Файлы должны быть в формате jpg, png или gif');
+                buttonStyleDanger();
+            }
         }
-        else showErrorMessage('Заполните все объязательные поля (*)');
+        else {
+            showErrorMessage('Заполните объязательные поля (*)');
+            buttonStyleDanger();
+        }
     });
 
     // removing error style from input when start typing
@@ -92,7 +99,10 @@ window.onload = function(){
         var images = data.getAll("photos");  // here getAll() is built-in method of FormData object
         var filesValid = true;
         images.forEach(function(image){
-            if(imageFormats.indexOf(image.type) == -1) filesValid = false;
+            if(imageFormats.indexOf(image.type) == -1) {
+                filesValid = false;
+                addErrorColor(photos);
+            }
         });
         return filesValid;
     }
@@ -101,9 +111,11 @@ window.onload = function(){
         invalids.forEach(function(inv){
             removeErrorColor(inv);
         });
+        removeErrorColor(photos);
         isValid = true;
         invalids = [];
         hideErrorMessage();
+        buttonStyleDefault();
     }
 
     function addErrorColor(node){
@@ -121,6 +133,16 @@ window.onload = function(){
 
     function hideErrorMessage(){
         feedback.classList.remove('show');
+    }
+
+    function buttonStyleDanger(){
+        submit.classList.remove('btn-default');
+        submit.classList.add('btn-danger');
+    }
+
+    function buttonStyleDefault(){
+        submit.classList.remove('btn-danger');
+        submit.classList.add('btn-default');
     }
 
     function showSnackbar(message){

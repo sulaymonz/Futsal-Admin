@@ -5,6 +5,7 @@ body {
 }
 .main-container {
     padding-bottom: 30px;
+    margin-top: 70px;
 }
 
 .panel {
@@ -37,7 +38,7 @@ body {
 }
 
 h3 {
-    margin-top: 90px !important;
+    /*margin-top: 90px !important;*/
     margin-bottom: 35px !important;
     text-shadow: 0 5px 10px rgba(0,0,0,.6);
 }
@@ -46,13 +47,18 @@ h3 {
     background: rgba(255,255,255,.9) !important;
 }
 .btn {
+    border: none !important;
+    transition: all .1s;
+}
+.btn-default {
     color: #fff !important;
     background-color: #665851 !important;
-    border: none !important;
 }
-.btn:hover {
+.btn-default:hover {
     background-color: #3b332f !important;
-    transition: all .1s;
+}
+.btn:focus {
+    outline: none !important;
 }
 .panel,
 .form-control,
@@ -96,7 +102,7 @@ h3 {
     position: fixed;
     z-index: 1;
     left: 50%;
-    bottom: 95px;
+    top: 70px;
 }
 #snackbar.show {
     visibility: visible !important;
@@ -104,18 +110,18 @@ h3 {
     animation: fadein 0.5s, fadeout 0.5s 2.5s;
 }
 @-webkit-keyframes fadein {
-    from {bottom: 0; opacity: 0;}
-    to {bottom: 95px; opacity: 1;}
+    from {top: 0; opacity: 0;}
+    to {top: 70px; opacity: 1;}
 }
 @keyframes fadein {
-    from {bottom: 0; opacity: 0;}
-    to {bottom: 95px; opacity: 1;}
+    from {top: 0; opacity: 0;}
+    to {top: 70px; opacity: 1;}
 }
 @-webkit-keyframes fadeout {
-    from {bottom: 95px; opacity: 1;}
-    to {bottom: 0; opacity: 0;}
+    from {top: 70px; opacity: 1;}
+    to {top: 0; opacity: 0;}
 }
 @keyframes fadeout {
-    from {bottom: 95px; opacity: 1;}
-    to {bottom: 0; opacity: 0;}
+    from {top: 70px; opacity: 1;}
+    to {top: 0; opacity: 0;}
 }
